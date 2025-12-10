@@ -39,6 +39,31 @@
       line-height: 1.5;
     }
 
+    /* Dark mode theme overrides */
+    body[data-theme="dark"] {
+      --ms-black: #f5f3ef;
+      --ms-soft-black: #f5f3ef;
+      --ms-bg: #111111;
+      --ms-card-bg: #181818;
+      --ms-border: #323232;
+      --ms-pill-bg: #202020;
+      --ms-muted: #aaaaaa;
+      background: radial-gradient(circle at top left, #202020 0, #111111 40%, #050505 100%);
+    }
+
+    body[data-theme="dark"] .site-header {
+      background: rgba(10, 10, 10, 0.96);
+      border-bottom: 1px solid rgba(60, 60, 60, 0.9);
+    }
+
+    body[data-theme="dark"] .card {
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.7);
+    }
+
+    body[data-theme="dark"] .highlight {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
     /* Top nav */
 
     .shell {
@@ -97,6 +122,12 @@
       color: var(--ms-soft-black);
     }
 
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
     nav {
       display: flex;
       align-items: center;
@@ -136,6 +167,36 @@
     .nav-link.primary:hover {
       border-color: var(--ms-soft-black);
       background: var(--ms-soft-black);
+    }
+
+    .theme-toggle {
+      border-radius: var(--ms-radius-pill);
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      background: #ffffff;
+      color: #222222;
+      width: 34px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 150ms ease-out,
+                  border-color 150ms ease-out,
+                  transform 150ms ease-out,
+                  box-shadow 150ms ease-out;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      border-color: var(--ms-soft-black);
+    }
+
+    body[data-theme="dark"] .theme-toggle {
+      background: #111111;
+      color: #f5f3ef;
+      border-color: #444444;
     }
 
     /* Hero */
@@ -197,7 +258,7 @@
       align-items: flex-start;
       position: relative;
       z-index: 1;
-      flex-wrap: wrap; /* allow wrapping so contact never overflows */
+      flex-wrap: wrap;
     }
 
     .hero-name-block {
@@ -484,6 +545,10 @@
                   background 160ms ease-out;
     }
 
+    body[data-theme="dark"] .experience-card {
+      background: #181818;
+    }
+
     .experience-card:hover {
       box-shadow: var(--ms-shadow-soft);
       border-color: rgba(0, 0, 0, 0.07);
@@ -536,6 +601,37 @@
       gap: 0.4rem;
     }
 
+    .experience-placeholder {
+      margin-top: 0.55rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: var(--ms-radius-pill);
+      font-size: 0.76rem;
+      letter-spacing: 0.12rem;
+      text-transform: uppercase;
+      text-align: center;
+      color: #ffffff;
+      background: linear-gradient(120deg,
+                  rgba(0,0,0,0.65),
+                  rgba(255,255,255,0.85),
+                  rgba(0,0,0,0.65));
+      background-size: 220% 100%;
+      animation: shimmer 1.6s linear infinite;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -120% 0; }
+      100% { background-position: 120% 0; }
+    }
+
+    body[data-theme="dark"] .experience-placeholder {
+      box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+    }
+
+    .experience-card.has-opened .experience-placeholder {
+      display: none;
+    }
+
     .experience-body {
       margin-top: 0.6rem;
       padding-top: 0.6rem;
@@ -546,7 +642,7 @@
     }
 
     .experience-card.open .experience-body {
-      max-height: 500px; /* enough for bullets */
+      max-height: 500px;
     }
 
     .experience-body ul {
@@ -649,13 +745,16 @@
           <span>Designate Store Manager</span>
         </div>
       </div>
-      <nav>
-        <a href="#profile" class="nav-link">Profile</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#skills" class="nav-link">Skills</a>
-        <a href="#education" class="nav-link">Education</a>
-        <a href="#contact" class="nav-link primary">Contact</a>
-      </nav>
+      <div class="header-right">
+        <nav>
+          <a href="#profile" class="nav-link">Profile</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#contact" class="nav-link primary">Contact</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+      </div>
     </div>
   </header>
 
@@ -770,7 +869,7 @@
           <div>
             <div class="experience-list">
               <!-- Gorillas -->
-              <article class="experience-card open">
+              <article class="experience-card open has-opened">
                 <div class="experience-header">
                   <div>
                     <div class="experience-title">Operations Supervisor (Store Manager Equivalent)</div>
@@ -810,6 +909,7 @@
                       <span class="tag-pill">KPI dashboards</span>
                       <span class="tag-pill">Peak readiness</span>
                     </div>
+                    <div class="experience-placeholder">Click on this card to view details</div>
                   </div>
                   <div class="experience-meta">
                     <span>Dec 2023 – Jul 2024</span>
@@ -839,6 +939,7 @@
                       <span class="tag-pill">Reporting accuracy</span>
                       <span class="tag-pill">Process improvement</span>
                     </div>
+                    <div class="experience-placeholder">Click on this card to view details</div>
                   </div>
                   <div class="experience-meta">
                     <span>Jun 2025 – Nov 2025</span>
@@ -866,6 +967,7 @@
                       <span class="tag-pill">Entrepreneurship</span>
                       <span class="tag-pill">Customer insight</span>
                     </div>
+                    <div class="experience-placeholder">Click on this card to view details</div>
                   </div>
                   <div class="experience-meta">
                     <span>Oct 2021 – May 2025</span>
@@ -1017,12 +1119,41 @@
   </div>
 
   <script>
+    // Dark mode toggle with localStorage
+    const body = document.body;
+    const themeToggle = document.getElementById('themeToggle');
+    const storedTheme = localStorage.getItem('ms-theme');
+
+    if (storedTheme === 'dark') {
+      body.setAttribute('data-theme', 'dark');
+      themeToggle.textContent = '☼';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        body.removeAttribute('data-theme');
+        localStorage.setItem('ms-theme', 'light');
+        themeToggle.textContent = '☾';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('ms-theme', 'dark');
+        themeToggle.textContent = '☼';
+      }
+    });
+
     // Toggle experience cards open/closed on click
     document.querySelectorAll('.experience-card').forEach(function(card) {
       card.addEventListener('click', function (e) {
-        // Prevent toggling if user clicked a link
         if (e.target.tagName.toLowerCase() === 'a' || e.target.closest('a')) return;
-        card.classList.toggle('open');
+
+        const isOpen = card.classList.contains('open');
+        if (!isOpen) {
+          card.classList.add('open');
+          card.classList.add('has-opened'); // permanently hide placeholder once opened
+        } else {
+          card.classList.remove('open');
+        }
       });
     });
 
